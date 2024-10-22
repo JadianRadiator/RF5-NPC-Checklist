@@ -10,13 +10,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Get Tag Name
-        id: tag
-        run: echo ::set-output name=tag_name::${GITHUB_REF#refs/tags/}
 
       - name: Create Release Archive
         run: |
-          VERSION=${{ steps.tag.outputs.tag_name }}
           # Copy all files except the excluded ones
           find . -type f | grep -Ev "exclude_file\.txt" | zip -@ release-$(date +'%Y%m%d%H%M%S').zip
 
