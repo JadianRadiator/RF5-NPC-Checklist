@@ -14,17 +14,17 @@
 
 <table id="imageTable">
   <tr>
-    <td><img src="image1.jpg" alt="Image 1"></td>
+    <td><img src="image1.jpg" alt="Image 1" class="image"></td>
     <td><input type="checkbox" data-image="image1.jpg"></td>
   </tr>
   <tr>
-    <td><img src="Rune Factory 5/Children/Children_Erika.png" alt="Image 2"></td>
+    <td><img src="Rune Factory 5/Children/Children_Erika.png" alt="Image 2" class="image"></td>
     <td><input type="checkbox" data-image="image2.jpg"></td>
   </tr>
 </table>
 
 <script>
-  // Load saved checkbox states from cookie
+  // Load saved checkbox states from localStorage
   window.onload = function() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(function(checkbox) {
@@ -37,7 +37,7 @@
     });
   };
 
-  // Save checkbox state to cookie when leaving the page
+  // Save checkbox state to localStorage when leaving the page
   window.onbeforeunload = function() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(function(checkbox) {
@@ -58,6 +58,16 @@
       }
     });
   });
+
+  // Add event listener to images to simulate checkbox click
+  var images = document.querySelectorAll('.image');
+  images.forEach(function(image) {
+    image.addEventListener('click', function() {
+      var checkbox = image.nextElementSibling.querySelector('input[type="checkbox"]');
+      checkbox.click();
+    });
+  });
+
 </script>
 
 </body>
