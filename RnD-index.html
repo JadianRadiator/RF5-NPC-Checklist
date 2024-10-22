@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Checklist</title>
+  <style>
+    .checked {
+      background-color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Image Checklist</h2>
+
+<table id="imageTable">
+  <tr>
+    <td><img src="image1.jpg" alt="Image 1"></td>
+    <td><input type="checkbox" data-image="image1.jpg"></td>
+  </tr>
+  <tr>
+    <td><img src="Rune Factory 5/Children/Children_Erika.png" alt="Image 2"></td>
+    <td><input type="checkbox" data-image="image2.jpg"></td>
+  </tr>
+</table>
+
+<script>
+  // Load saved checkbox states from cookie
+  window.onload = function() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+      var imageSrc = checkbox.getAttribute('data-image');
+      var checked = localStorage.getItem(imageSrc) === 'true';
+      checkbox.checked = checked;
+      if (checked) {
+        checkbox.parentNode.parentNode.classList.add('checked');
+      }
+    });
+  };
+
+  // Save checkbox state to cookie when leaving the page
+  window.onbeforeunload = function() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+      var imageSrc = checkbox.getAttribute('data-image');
+      var checked = checkbox.checked;
+      localStorage.setItem(imageSrc, checked);
+    });
+  };
+
+  // Add event listener to checkboxes to update image background
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        this.parentNode.parentNode.classList.add('checked');
+      } else {
+        this.parentNode.parentNode.classList.remove('checked');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
