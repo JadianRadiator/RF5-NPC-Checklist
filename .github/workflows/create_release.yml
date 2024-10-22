@@ -10,9 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Get Tag Name
-        id: tag
-        run: echo ::set-output name=tag_name::${GITHUB_REF#refs/tags/}
 
       - name: Create Release Archive
         run: |
