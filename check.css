@@ -19,7 +19,7 @@
 
     /* Hide checkboxes */
     input[type="checkbox"] {
-        display: none; 
+        display: all; 
     }
 
     button {
