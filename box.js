@@ -1,26 +1,20 @@
-document.querySelectorAll('.clickable-image').forEach(image => {
-        image.addEventListener('click', () => {
-            const checkboxId = image.getAttribute('data-checkbox');
-            const checkbox = document.getElementById(checkboxId);
-            checkbox.checked = !checkbox.checked; // Toggle checkbox state
-
-            // Update image styles based on checkbox state
-            image.classList.toggle('checked'); // Use a CSS class for styling
-        });
+  // Add event listener to checkboxes to update image background
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        this.parentNode.parentNode.classList.add('checked');
+      } else {
+        this.parentNode.parentNode.classList.remove('checked');
+      }
     });
+  });
 
-    document.getElementById('checkAll').addEventListener('click', () => {
-        document.querySelectorAll('.image-checkbox input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = true;
-            const image = document.querySelector(`img[data-checkbox="${checkbox.id}"]`);
-            image.classList.add('checked'); // Add the checked class
-        });
-    });
-
-    document.getElementById('uncheckAll').addEventListener('click', () => {
-        document.querySelectorAll('.image-checkbox input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
-            const image = document.querySelector(`img[data-checkbox="${checkbox.id}"]`);
-            image.classList.remove('checked'); // Remove the checked class
-        });
-    });
+// Add event listener to images to simulate checkbox click
+var images = document.querySelectorAll('.image');
+images.forEach(function(image) {
+  image.addEventListener('click', function() {
+    var checkbox = image.parentElement.nextElementSibling.querySelector('input[type="checkbox"]');
+    checkbox.click();
+  });
+});

@@ -9,6 +9,11 @@
     input[type="checkbox"] {
       display: none;
     }
+    
+    td.hidden {
+      display: none;
+    }
+
   </style>
 </head>
 <body>
@@ -24,55 +29,16 @@
     <td><img src="Rune Factory 5/Children/Children_Erika.png" alt="Image 2" class="image"></td>
     <td><input type="checkbox" data-image="image2.jpg"></td>
   </tr>
+  <tr>
+    <td><button id="checkAll">Check All</button></td>
+<td><button id="uncheckAll">Uncheck All</button></td>
+</td></tr>
 </table>
 
-
-<script>
-  // Load saved checkbox states from localStorage
-  window.onload = function() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(function(checkbox) {
-      var imageSrc = checkbox.getAttribute('data-image');
-      var checked = localStorage.getItem(imageSrc) === 'true';
-      checkbox.checked = checked;
-      if (checked) {
-        checkbox.parentNode.parentNode.classList.add('checked');
-      }
-    });
-  };
-
-  // Save checkbox state to localStorage when leaving the page
-  window.onbeforeunload = function() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(function(checkbox) {
-      var imageSrc = checkbox.getAttribute('data-image');
-      var checked = checkbox.checked;
-      localStorage.setItem(imageSrc, checked);
-    });
-  };
-
-  // Add event listener to checkboxes to update image background
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener('change', function() {
-      if (this.checked) {
-        this.parentNode.parentNode.classList.add('checked');
-      } else {
-        this.parentNode.parentNode.classList.remove('checked');
-      }
-    });
-  });
-
-// Add event listener to images to simulate checkbox click
-var images = document.querySelectorAll('.image');
-images.forEach(function(image) {
-  image.addEventListener('click', function() {
-    var checkbox = image.parentElement.nextElementSibling.querySelector('input[type="checkbox"]');
-    checkbox.click();
-  });
-});
-
-</script>
+<script src="box.js"></script>
+<script src="check_button.js"></script>
+<script src="store_load.js"></script>
+<script src="store_save.js"></script>
 
 </body>
 </html>
