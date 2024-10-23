@@ -10,32 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build project
-      run: npm run build
+      - name: Build project
+        run: npm run build
 
-    - name: Package release artifacts
-      id: package
-      run: |
-        # Whitelisted files to include in the release artifacts
-        WHITELIST="file1.txt file2.js"
+      - name: Package release artifacts
+        id: package
+        run: |
+          # Whitelisted files to include in the release artifacts
+          WHITELIST="file1.txt file2.js"
 
-        # Blacklisted files to exclude from the release artifacts
-        BLACKLIST="file3.txt file4.js"
+          # Blacklisted files to exclude from the release artifacts
+          BLACKLIST="file3.txt file4.js"
 
-        ls | grep -E "($WHITELIST)" | xargs tar -cvzf release-artifacts.tar.gz
+          # Create a zip archive with whitelist files
+          zip -r release-artifacts.zip $WHITELIST
 
-    - name: Upload release artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: release-artifacts
-        path: release-artifacts.tar.gz
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifacts
+          path: release-artifacts.zip
