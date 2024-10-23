@@ -302,6 +302,39 @@
     </div>
 
 <script src="box.js"></script>
+<script>
+    // Function to set a cookie value
+    function setCookie(name, value) {
+        document.cookie = `${name}=${value}`;
+    }
+
+    // Function to get a cookie value
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(`${name}=`)) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return '';
+    }
+
+    // Load checkbox state from cookie on page load
+    window.onload = function() {
+        const checkbox = document.getElementById('Villagers_Heinz.png');
+        const isChecked = getCookie('Villagers_Heinz.png');
+        if (isChecked === 'true') {
+            checkbox.checked = true;
+        }
+    };
+
+    // Save checkbox state to cookie when leaving/closing the page
+    window.onbeforeunload = function() {
+        const checkbox = document.getElementById('Villagers_Heinz.png');
+        setCookie('Villagers_Heinz.png', checkbox.checked);
+    };
+    </script>
 </body>
 
 </html>
