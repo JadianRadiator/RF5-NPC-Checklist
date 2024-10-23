@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image-Checkbox Table Checklist</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+</style>
+</head>
+<body>
+<table id="checklist">
+    <tr>
+        <th>Item</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td><img src="image1.jpg" alt="Image 1"><input type="checkbox"></td>
+    </tr>
+    <tr>
+        <td><img src="image2.jpg" alt="Image 2"><input type="checkbox"></td>
+    </tr>
+    <tr>
+        <td><img src="image3.jpg" alt="Image 3"><input type="checkbox"></td>
+    </tr>
+</table>
+
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    
+    checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', () => {
+            localStorage.setItem(`item${index}`, checkbox.checked);
+        });
+        
+        const isChecked = localStorage.getItem(`item${index}`) === 'true';
+        
+        checkbox.checked = isChecked;
+    });
+</script>
+
+</body>
+</html>
