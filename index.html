@@ -19,6 +19,12 @@
         max-width: 100px;
         max-height: 100px;
     }
+    input[type="checkbox"] {
+        display: none; /* Hide the checkbox by default */
+    }
+    label {
+        display: block; /* Display the label as a block element */
+    }
 </style>
 </head>
 <body>
@@ -28,13 +34,13 @@
         <th>Status</th>
     </tr>
     <tr>
-        <td><label><img src="image1.jpg" alt="Image 1"><input type="checkbox"><span>Item 1</span></label></td>
+        <td><label><img src="image1.jpg" alt="Image 1"><br><input type="checkbox"><span>Item 1</span></label></td>
     </tr>
     <tr>
-        <td><label><img src="image2.jpg" alt="Image 2"><input type="checkbox"><span>Item 2</span></label></td>
+        <td><label><img src="image2.jpg" alt="Image 2"><br><input type="checkbox"><span>Item 2</span></label></td>
     </tr>
     <tr>
-        <td><label><img src="image3.jpg" alt="Image 3"><input type="checkbox"><span>Item 3</span></label></td>
+        <td><label><img src="image3.jpg" alt="Image 3"><br><input type="checkbox"><span>Item 3</span></label></td>
     </tr>
 </table>
 
@@ -65,7 +71,7 @@
     function checkAll() {
       checkboxes.forEach(checkbox => {
           checkbox.checked = true;
-          localStorage.setItem(checkbox.id, 'true');
+          localStorage.setItem(`item${checkbox.id}`, 'true');
           checkbox.parentNode.style.backgroundColor = 'lightgreen';
       });
     }
@@ -73,7 +79,7 @@
     function uncheckAll() {
       checkboxes.forEach(checkbox => {
           checkbox.checked = false;
-          localStorage.setItem(checkbox.id, 'false');
+          localStorage.setItem(`item${checkbox.id}`, 'false');
           checkbox.parentNode.style.backgroundColor = 'white';
       });
     }
