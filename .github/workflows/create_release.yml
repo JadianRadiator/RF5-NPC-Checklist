@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3  # Latest version of checkout action
 
-      - name: Set up Node.js
+      - name: Set up Node.js (use latest LTS)
         uses: actions/setup-node@v3  # Latest version of setup-node action
         with:
-          node-version: '20'  # Using the current default Node.js version (v20)
+          node-version: 'auto'
 
       - name: Install dependencies
         run: npm install
