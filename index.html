@@ -28,15 +28,18 @@
         <th>Status</th>
     </tr>
     <tr>
-        <td><img src="image1.jpg" alt="Image 1"><input type="checkbox"></td>
+        <td><label><img src="image1.jpg" alt="Image 1"><input type="checkbox"><span>Item 1</span></label></td>
     </tr>
     <tr>
-        <td><img src="image2.jpg" alt="Image 2"><input type="checkbox"></td>
+        <td><label><img src="image2.jpg" alt="Image 2"><input type="checkbox"><span>Item 2</span></label></td>
     </tr>
     <tr>
-        <td><img src="image3.jpg" alt="Image 3"><input type="checkbox"></td>
+        <td><label><img src="image3.jpg" alt="Image 3"><input type="checkbox"><span>Item 3</span></label></td>
     </tr>
 </table>
+
+<button onclick="checkAll()">Check All</button>
+<button onclick="uncheckAll()">Uncheck All</button>
 
 <script>
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -49,7 +52,31 @@
         const isChecked = localStorage.getItem(`item${index}`) === 'true';
         
         checkbox.checked = isChecked;
+        
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.parentNode.style.backgroundColor = 'lightgreen';
+            } else {
+                this.parentNode.style.backgroundColor = 'white';
+            }
+        });
     });
+
+    function checkAll() {
+      checkboxes.forEach(checkbox => {
+          checkbox.checked = true;
+          localStorage.setItem(checkbox.id, 'true');
+          checkbox.parentNode.style.backgroundColor = 'lightgreen';
+      });
+    }
+
+    function uncheckAll() {
+      checkboxes.forEach(checkbox => {
+          checkbox.checked = false;
+          localStorage.setItem(checkbox.id, 'false');
+          checkbox.parentNode.style.backgroundColor = 'white';
+      });
+    }
 </script>
 
 </body>
