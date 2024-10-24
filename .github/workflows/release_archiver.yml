@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Create ZIP file
         run: zip release-${GITHUB_SHA::8}.zip your_files_here
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: release-${GITHUB_SHA::8}
           path: release-${GITHUB_SHA::8}.zip
