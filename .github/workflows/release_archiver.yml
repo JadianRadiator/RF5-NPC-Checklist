@@ -12,8 +12,7 @@ jobs:
 
 - name: Create ZIP file excluding blacklist
   run: |
-    zip -r release-${GITHUB_SHA::8}.zip . \
-    -x ".github/*" ".gitignore" "RnD*/*"
+    zip -r release-${GITHUB_SHA::8}.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
