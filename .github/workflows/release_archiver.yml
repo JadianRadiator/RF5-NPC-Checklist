@@ -19,19 +19,19 @@ jobs:
           zip -r release-${GITHUB_SHA::8}.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: List files in workspace
-        run: ls -la
+        run: ls -la ${{ github.workspace }}  # List files to verify ZIP location
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-${GITHUB_SHA::8}
-          path: release-${GITHUB_SHA::8}.zip
+          path: ${{ github.workspace }}/release-${GITHUB_SHA::8}.zip  # Ensure correct path is used
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
           name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
-          files: release-${GITHUB_SHA::8}.zip
+          files: ${{ github.workspace }}/release-${GITHUB_SHA::8}.zip  # Ensure correct path is used
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure token is provided correctly
