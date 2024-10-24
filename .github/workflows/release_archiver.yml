@@ -19,7 +19,7 @@ jobs:
           YEAR=$(date +'%Y')  # 4-digit year (e.g., 2024)
           
           # Count existing releases for the current day and convert to a letter
-          COUNT=$(find . -name "release-${MONTH}_${DAY}-${YEAR}-*.zip" | wc -l)  # Count previous releases for today
+          COUNT=$(find . -name "release-*.zip" | wc -l)  # Count previous releases for today
           LETTER=$(echo {A..Z} | cut -d ' ' -f $((COUNT+1)))  # Get corresponding letter (A, B, C, etc.)
 
           # Combine parts into the desired version format
@@ -30,22 +30,19 @@ jobs:
 
       - name: Create ZIP file excluding blacklist
         run: |
-          zip -r release-${VERSION}.zip . -x ".github/*" ".gitignore" "RnD*/*"
-
-      - name: List files in workspace (optional, to verify ZIP file location)
-        run: ls -la ${{ github.workspace }}
+          zip -r release.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-${VERSION}
-          path: release-${VERSION}.zip  # Use the correct path (relative)
+          name: release
+          path: release.zip
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.VERSION }}  # Use the new version format as the tag name
-          name: Release ${{ env.VERSION }}  # Use the new version format as the release name
-          files: release-${VERSION}.zip  # Ensure correct path
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          files: release.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
