@@ -10,17 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code from repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up Node.js (adjusted to use node20)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-        working-directory: '.'  # Adjust if package.json is in a subdirectory
 
       - name: Create zip archive
         run: |
