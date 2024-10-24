@@ -15,9 +15,19 @@ jobs:
 
       - name: Create zip archive
         run: |
-          # Define blacklist items
-          BLACKLIST=(".github/" "RnD*/*" ".gitignore")  # Adjust the blacklist to your project
-          zip -r release-${GITHUB_SHA::8}.zip . -x "${BLACKLIST[@]}"
+          # Optional: Define blacklist items
+          BLACKLIST=(".github/" "RnD*/*" ".gitignore")
+          
+          # Create the zip archive and log output for debugging
+          zip -r release-${GITHUB_SHA::8}.zip . -x "${BLACKLIST[@]}" || echo "Zip creation failed"
+          
+          # Verify the zip file was created
+          if [ -f release-${GITHUB_SHA::8}.zip ]; then
+            echo "Release archive created: release-${GITHUB_SHA::8}.zip"
+          else
+            echo "ERROR: Release archive was not created"
+            exit 1
+          fi
 
       - name: Upload release artifact
         uses: actions/upload-artifact@v4
