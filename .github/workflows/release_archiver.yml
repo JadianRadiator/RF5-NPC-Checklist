@@ -18,7 +18,7 @@ jobs:
           YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
           
           # Count previous releases for today
-          COUNT=$(find . -maxdepth 1 -name "release-*.zip" | wc -l)
+          COUNT=$(find . -maxdepth 1 -name "npc_checklist-release.zip" | wc -l)
           
           # Convert the count to a corresponding letter (A, B, C, etc.)
           LETTER=$(echo {A..Z} | cut -d' ' -f$((COUNT+1)))
