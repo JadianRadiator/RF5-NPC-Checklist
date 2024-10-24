@@ -13,36 +13,37 @@ jobs:
       - name: Generate release version with custom format
         id: version
         run: |
-          # Get the current date parts
           MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
-          DAY=$(date +'%d')  # 2-digit day (e.g., 22)
-          YEAR=$(date +'%Y')  # 4-digit year (e.g., 2024)
+          DAY=$(date +'%d')    # 2-digit day (e.g., 22)
+          YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
           
-          # Count existing releases for the current day and convert to a letter
-          COUNT=$(find . -name "release-*.zip" | wc -l)  # Count previous releases for today
-          LETTER=$(echo {A..Z} | cut -d ' ' -f $((COUNT+1)))  # Get corresponding letter (A, B, C, etc.)
+          # Count previous releases for today
+          COUNT=$(find . -maxdepth 1 -name "release-*.zip" | wc -l)
+          
+          # Convert the count to a corresponding letter (A, B, C, etc.)
+          LETTER=$(echo {A..Z} | cut -d' ' -f$((COUNT+1)))
 
-          # Combine parts into the desired version format
+          # Combine the date and letter to form the version name
           VERSION="${MONTH}_${DAY}-${YEAR}-${LETTER}"
           
-          # Save the version for later use
+          # Save the version to the environment for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create ZIP file excluding blacklist
         run: |
-          zip -r npc_checklist-release.zip . -x ".github/*" ".gitignore" "RnD*/*"
+          zip -r release.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: release
-          path: npc_checklist-release.zip
+          path: release.zip
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
           name: Release ${{ env.VERSION }}
-          files: npc_checklist-release.zip
+          files: release.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
