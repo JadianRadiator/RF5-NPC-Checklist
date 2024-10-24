@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main  # Adjust to match the branches you want to trigger on
 
 jobs:
   build:
@@ -10,9 +10,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Generate minimal timestamp with dashes for version
+        id: version
+        run: echo "VERSION=$(date +'%y-%m-%d-%H')" >> $GITHUB_ENV  # Generates timestamp (YY-MM-DD-HH)
+
       - name: Create ZIP file excluding blacklist
         run: |
           zip -r release-${GITHUB_SHA::8}.zip . -x ".github/*" ".gitignore" "RnD*/*"
+
+      - name: List files in workspace
+        run: ls -la
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -21,10 +28,10 @@ jobs:
           path: release-${GITHUB_SHA::8}.zip
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.0
+          tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
+          name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
           files: release-${GITHUB_SHA::8}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
