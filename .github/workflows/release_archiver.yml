@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main  # Adjust to match the branches you want to trigger on
+      - main
 
 jobs:
   build:
@@ -28,25 +28,24 @@ jobs:
           # Save the version for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-
       - name: Create ZIP file excluding blacklist
         run: |
-          zip -r release.zip . -x ".github/*" ".gitignore" "RnD*/*"
+          zip -r release-${VERSION}.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
-      - name: List files in workspace
+      - name: List files in workspace (optional, to verify ZIP file location)
         run: ls -la ${{ github.workspace }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release.zip
-          path: ${{ github.workspace }}/release.zip
+          name: release-${VERSION}
+          path: release-${VERSION}.zip  # Use the correct path (relative)
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}  # Use the new version format as the tag name
           name: Release ${{ env.VERSION }}  # Use the new version format as the release name
-          files: ${{ github.workspace }}/release-${SHORT_SHA}.zip
+          files: release-${VERSION}.zip  # Ensure correct path
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
