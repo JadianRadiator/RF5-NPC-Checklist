@@ -46,7 +46,7 @@ jobs:
           path: ${{ github.workspace }}/release-${SHORT_SHA}.zip
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}  # Use the new version format as the tag name
           name: Release ${{ env.VERSION }}  # Use the new version format as the release name
