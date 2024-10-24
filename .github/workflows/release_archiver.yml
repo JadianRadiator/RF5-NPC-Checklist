@@ -39,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release
+          name: release.zip
           path: ${{ github.workspace }}/release.zip
 
       - name: Create Release
