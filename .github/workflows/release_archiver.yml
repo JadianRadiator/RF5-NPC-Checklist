@@ -28,13 +28,10 @@ jobs:
           # Save the version for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Get short SHA
-        id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
 
       - name: Create ZIP file excluding blacklist
         run: |
-          zip -r release-${SHORT_SHA}.zip . -x ".github/*" ".gitignore" "RnD*/*"
+          zip -r release.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: List files in workspace
         run: ls -la ${{ github.workspace }}
@@ -42,8 +39,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-${SHORT_SHA}
-          path: ${{ github.workspace }}/release-${SHORT_SHA}.zip
+          name: release
+          path: ${{ github.workspace }}/release.zip
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
