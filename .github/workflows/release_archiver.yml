@@ -14,9 +14,13 @@ jobs:
         id: version
         run: echo "VERSION=$(date +'%y-%m-%d-%H')" >> $GITHUB_ENV  # Generates timestamp (YY-MM-DD-HH)
 
+      - name: Get short SHA
+        id: vars
+        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV  # Capture the short SHA and store it in an env variable
+
       - name: Create ZIP file excluding blacklist
         run: |
-          zip -r release-${GITHUB_SHA::8}.zip . -x ".github/*" ".gitignore" "RnD*/*"
+          zip -r release-${SHORT_SHA}.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: List files in workspace
         run: ls -la ${{ github.workspace }}  # List files to verify ZIP location
@@ -24,14 +28,14 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-${GITHUB_SHA::8}
-          path: ${{ github.workspace }}/release-${GITHUB_SHA::8}.zip  # Ensure correct path is used
+          name: release-${SHORT_SHA}
+          path: ${{ github.workspace }}/release-${SHORT_SHA}.zip  # Use the variable for the path
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
           name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
-          files: ${{ github.workspace }}/release-${GITHUB_SHA::8}.zip  # Ensure correct path is used
+          files: ${{ github.workspace }}/release-${SHORT_SHA}.zip  # Use the variable to locate the file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure token is provided correctly
