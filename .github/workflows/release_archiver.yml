@@ -1,3 +1,8 @@
+on:
+  push:
+    branches:
+      - main  # or your default branch
+
 jobs:
   build:
     runs-on: ubuntu-latest
