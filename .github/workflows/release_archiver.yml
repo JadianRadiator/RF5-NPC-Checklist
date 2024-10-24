@@ -32,7 +32,7 @@ jobs:
           path: ${{ github.workspace }}/release.zip
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
           name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
