@@ -28,14 +28,14 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-${SHORT_SHA}
-          path: ${{ github.workspace }}/release-${SHORT_SHA}.zip  # Use the variable for the path
+          name: release
+          path: ${{ github.workspace }}/release.zip
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
           name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
-          files: ${{ github.workspace }}/release-${SHORT_SHA}.zip  # Use the variable to locate the file
+          files: ${{ github.workspace }}/release.zip  # Use the variable to locate the file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure token is provided correctly
