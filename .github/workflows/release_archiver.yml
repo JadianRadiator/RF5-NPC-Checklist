@@ -10,32 +10,46 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate minimal timestamp with dashes for version
+      - name: Generate release version with custom format
         id: version
-        run: echo "VERSION=$(date +'%y-%m-%d-%H')" >> $GITHUB_ENV  # Generates timestamp (YY-MM-DD-HH)
+        run: |
+          # Get the current date parts
+          MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
+          DAY=$(date +'%d')  # 2-digit day (e.g., 22)
+          YEAR=$(date +'%Y')  # 4-digit year (e.g., 2024)
+          
+          # Count existing releases for the current day and convert to a letter
+          COUNT=$(find . -name "release-${MONTH}_${DAY}-${YEAR}-*.zip" | wc -l)  # Count previous releases for today
+          LETTER=$(echo {A..Z} | cut -d ' ' -f $((COUNT+1)))  # Get corresponding letter (A, B, C, etc.)
+
+          # Combine parts into the desired version format
+          VERSION="${MONTH}_${DAY}-${YEAR}-${LETTER}"
+          
+          # Save the version for later use
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Get short SHA
         id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV  # Capture the short SHA and store it in an env variable
+        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
 
       - name: Create ZIP file excluding blacklist
         run: |
           zip -r release-${SHORT_SHA}.zip . -x ".github/*" ".gitignore" "RnD*/*"
 
       - name: List files in workspace
-        run: ls -la ${{ github.workspace }}  # List files to verify ZIP location
+        run: ls -la ${{ github.workspace }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: ${{ github.workspace }}/release.zip
+          name: release-${SHORT_SHA}
+          path: ${{ github.workspace }}/release-${SHORT_SHA}.zip
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.VERSION }}  # Use the timestamp with dashes as the tag name
-          name: Release ${{ env.VERSION }}  # Use the timestamp with dashes as the release name
-          files: ${{ github.workspace }}/release.zip  # Use the variable to locate the file
+          tag_name: ${{ env.VERSION }}  # Use the new version format as the tag name
+          name: Release ${{ env.VERSION }}  # Use the new version format as the release name
+          files: ${{ github.workspace }}/release-${SHORT_SHA}.zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure token is provided correctly
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
