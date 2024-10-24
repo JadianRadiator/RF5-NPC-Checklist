@@ -1,36 +1,24 @@
-name: Create Release Artifact
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
-  create_release:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Create zip archive
-        run: |
-          # Optional: Define blacklist items
-          BLACKLIST=(".github/" "RnD*/*" ".gitignore")
-          
-          # Create the zip archive and log output for debugging
-          zip -r release-${GITHUB_SHA::8}.zip . -x "${BLACKLIST[@]}" || echo "Zip creation failed"
-          
-          # Verify the zip file was created
-          if [ -f release-${GITHUB_SHA::8}.zip ]; then
-            echo "Release archive created: release-${GITHUB_SHA::8}.zip"
-          else
-            echo "ERROR: Release archive was not created"
-            exit 1
-          fi
+      - name: Create ZIP file
+        run: zip release-${GITHUB_SHA::8}.zip your_files_here
 
-      - name: Upload release artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: release-${GITHUB_SHA::8}
           path: release-${GITHUB_SHA::8}.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          files: release-${GITHUB_SHA::8}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
