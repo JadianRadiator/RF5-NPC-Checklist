@@ -16,7 +16,7 @@ jobs:
       - name: Create zip archive
         run: |
           # Define blacklist items
-          BLACKLIST=(".github/" "RnD*/*" ".gitignor")  # Adjust the blacklist to your project
+          BLACKLIST=(".github/" "RnD*/*" ".gitignore")  # Adjust the blacklist to your project
           zip -r release-${GITHUB_SHA::8}.zip . -x "${BLACKLIST[@]}"
 
       - name: Upload release artifact
