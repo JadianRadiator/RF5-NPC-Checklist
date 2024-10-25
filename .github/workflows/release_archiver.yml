@@ -40,14 +40,16 @@ jobs:
 
       - name: Create ZIP file
         run: |
-          # Create a ZIP file (adjust the path as needed)
-          zip -r "${{ env.VERSION }}.zip" . -x ".github/*" ".gitignore"
+          # Create a ZIP file with the desired naming format
+          ZIP_NAME="npc_checklist-${{ env.short_hash }}.zip"
+          zip -r "$ZIP_NAME" . -x ".github/*" ".gitignore"
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV  # Store ZIP name in environment variable
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VERSION }}  # Use the created version as the artifact name
-          path: ${{ env.VERSION }}.zip  # Path to the created ZIP file
+          name: ${{ env.ZIP_NAME }}  # Use the created ZIP name as the artifact name
+          path: ${{ env.ZIP_NAME }}  # Path to the created ZIP file
 
       - name: Create Release
         id: create_release
@@ -56,7 +58,7 @@ jobs:
           tag_name: ${{ env.short_hash }}  # Use only the short hash for the tag
           name: ${{ env.VERSION }}  # Use the created version for the release name
           body: ""  # Empty body as you requested no description
-          files: ${{ env.VERSION }}.zip  # Upload the created ZIP file to the release
+          files: ${{ env.ZIP_NAME }}  # Upload the created ZIP file to the release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN for authentication
 
