@@ -16,16 +16,10 @@ jobs:
           MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
           DAY=$(date +'%d')    # 2-digit day (e.g., 22)
           YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
-          
-          # Count previous releases for today
-          COUNT=$(find . -maxdepth 1 -name "npc_checklist-release.zip" | wc -l)
-          
-          # Convert the count to a corresponding letter (A, B, C, etc.)
-          LETTER=$(echo {A..Z} | cut -d' ' -f$((COUNT+1)))
 
           # Combine the date and letter to form the version name
-          VERSION="${MONTH}_${DAY}-${YEAR}-${LETTER}"
-          
+          VERSION="${MONTH}_${DAY}-${YEAR}"
+
           # Save the version to the environment for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
