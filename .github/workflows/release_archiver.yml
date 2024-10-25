@@ -18,7 +18,7 @@ jobs:
           YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
 
           # Create a unique version with a timestamp
-          VERSION="$(date +'%H')-$(date +'%M')-$(date +'%S')"
+          VERSION="$(date +'%H-%M-%S')"
 
           # Save the version to the environment for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
