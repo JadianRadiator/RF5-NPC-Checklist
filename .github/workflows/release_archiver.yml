@@ -43,7 +43,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.short_hash }}  # Use only the short hash for the tag
-          release_name: Release ${{ env.VERSION }}  # Release name in the format Month_Day_Year-HASH
+          name: ${{ env.VERSION }}  # Use the created version for the release name
+          body: ""  # Empty body as you requested no description
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN for authentication
 
