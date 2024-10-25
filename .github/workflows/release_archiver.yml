@@ -38,6 +38,17 @@ jobs:
           VERSION="${MONTH}_${DAY}_${YEAR}-${{ env.short_hash }}"
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Store version in environment variable
 
+      - name: Create ZIP file
+        run: |
+          # Create a ZIP file (adjust the path as needed)
+          zip -r "${{ env.VERSION }}.zip" . -x ".github/*" ".gitignore"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.VERSION }}  # Use the created version as the artifact name
+          path: ${{ env.VERSION }}.zip  # Path to the created ZIP file
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -45,6 +56,7 @@ jobs:
           tag_name: ${{ env.short_hash }}  # Use only the short hash for the tag
           name: ${{ env.VERSION }}  # Use the created version for the release name
           body: ""  # Empty body as you requested no description
+          files: ${{ env.VERSION }}.zip  # Upload the created ZIP file to the release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN for authentication
 
