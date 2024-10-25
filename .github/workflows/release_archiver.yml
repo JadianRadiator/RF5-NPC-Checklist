@@ -1,9 +1,9 @@
-name: Generate Short Hash
+name: Generate Short Hash and Create Release
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your desired branch
 
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Generate Timestamp
         id: generate_timestamp
@@ -19,7 +19,7 @@ jobs:
           # Get the current timestamp in the format hour_minute_second
           TIMESTAMP=$(date +"%H_%M_%S")
           echo "Timestamp: $TIMESTAMP"
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_ENV
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_ENV  # Store in environment variable
 
       - name: Generate Short Hash
         id: generate_short_hash
@@ -27,7 +27,21 @@ jobs:
           # Encode the timestamp to Base64 and truncate it to 5 characters
           SHORT_HASH=$(echo -n "$timestamp" | base64 | cut -c1-5)
           echo "Short Hash: $SHORT_HASH"
-          echo "short_hash=$SHORT_HASH" >> $GITHUB_ENV
+          echo "short_hash=$SHORT_HASH" >> $GITHUB_ENV  # Store short hash in environment variable
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v0.1.${{ env.short_hash }}  # Tag format using the short hash
+          release_name: Release v0.1.${{ env.short_hash }}  # Release name
+          body: |
+            This release includes the following features:
+            - Feature 1
+            - Feature 2
+            - Short Hash: ${{ env.short_hash }}  # Include the short hash in the release body
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN for authentication
 
       - name: Use Short Hash
         run: |
