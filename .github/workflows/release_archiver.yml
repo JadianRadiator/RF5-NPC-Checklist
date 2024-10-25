@@ -46,7 +46,7 @@ jobs:
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV  # Store ZIP name in environment variable
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ZIP_NAME }}  # Use the created ZIP name as the artifact name
           path: ${{ env.ZIP_NAME }}  # Path to the created ZIP file
