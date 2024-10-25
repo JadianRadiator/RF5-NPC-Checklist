@@ -17,8 +17,8 @@ jobs:
           DAY=$(date +'%d')    # 2-digit day (e.g., 22)
           YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
 
-          # Combine the date and letter to form the version name
-          VERSION="${MONTH}_${VERSION="${MONTH}_${DAY}-${YEAR}-$(date +'%H%M%S')"
+          # Create a unique version with a timestamp
+          VERSION="NPC Checklist-$(date +'%H%M%S')"
 
           # Save the version to the environment for later use
           echo "VERSION=$VERSION" >> $GITHUB_ENV
