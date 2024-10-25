@@ -1,3 +1,5 @@
+name: Generate Short Hash
+
 on:
   push:
     branches:
@@ -6,38 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Generate release version with custom format
-        id: version
+      - name: Generate Timestamp
+        id: generate_timestamp
         run: |
-          MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
-          DAY=$(date +'%d')    # 2-digit day (e.g., 22)
-          YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
+          # Get the current timestamp in the format hour_minute_second
+          TIMESTAMP=$(date +"%H_%M_%S")
+          echo "Timestamp: $TIMESTAMP"
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_ENV
 
-          # Create a unique version with a timestamp
-          VERSION="${MONTH}_${DAY}_${YEAR}-$(date +'%H_%M_%S')"
-
-          # Save the version to the environment for later use
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-      - name: Create ZIP file excluding blacklist
+      - name: Generate Short Hash
+        id: generate_short_hash
         run: |
-          zip -r npc_checklist-release.zip . -x ".github/*" ".gitignore" "RnD*/*"
+          # Encode the timestamp to Base64 and truncate it to 5 characters
+          SHORT_HASH=$(echo -n "$timestamp" | base64 | cut -c1-5)
+          echo "Short Hash: $SHORT_HASH"
+          echo "short_hash=$SHORT_HASH" >> $GITHUB_ENV
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: release
-          path: npc_checklist-release.zip
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.VERSION }}
-          name: Release ${{ env.VERSION }}
-          files: npc_checklist-release.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Use Short Hash
+        run: |
+          echo "The generated short hash is: ${{ env.short_hash }}"
