@@ -44,11 +44,6 @@ jobs:
         with:
           tag_name: ${{ env.short_hash }}  # Use only the short hash for the tag
           release_name: Release ${{ env.VERSION }}  # Release name in the format Month_Day_Year-HASH
-          body: |
-            This release includes the following features:
-            - Feature 1
-            - Feature 2
-            - Short Hash: ${{ env.short_hash }}  # Include the short hash in the release body
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GITHUB_TOKEN for authentication
 
