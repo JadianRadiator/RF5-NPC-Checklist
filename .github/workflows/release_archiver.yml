@@ -24,17 +24,29 @@ jobs:
       - name: Generate Short Hash
         id: generate_short_hash
         run: |
-          # Encode the timestamp to Base64 and truncate it to 5 characters
-          SHORT_HASH=$(echo -n "$timestamp" | base64 | cut -c1-5)
+          # Encode the timestamp to Base64 and truncate it to 4 characters
+          SHORT_HASH=$(echo -n "$timestamp" | base64 | cut -c1-4)
           echo "Short Hash: $SHORT_HASH"
           echo "short_hash=$SHORT_HASH" >> $GITHUB_ENV  # Store short hash in environment variable
+
+      - name: Create Release Version
+        id: create_version
+        run: |
+          # Get the current date components
+          MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
+          DAY=$(date +'%d')    # 2-digit day (e.g., 24)
+          YEAR=$(date +'%Y')   # 4-digit year (e.g., 2024)
+
+          # Create a version string in the format Oct_24_2024-HH_MM_SS
+          VERSION="${MONTH}_${DAY}_${YEAR}-${{ env.timestamp }}"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV  # Store version in environment variable
 
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v0.1.${{ env.short_hash }}  # Tag format using the short hash
-          release_name: ${MONTH}_${DAY}_${YEAR}-${{ env.short_hash }}  # Release name
+          release_name: Release ${{ env.VERSION }}  # Release name
           body: |
             This release includes the following features:
             - Feature 1
