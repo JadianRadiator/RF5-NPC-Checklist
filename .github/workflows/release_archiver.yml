@@ -34,8 +34,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v0.1.${{ env.short_hash }}  # Tag format using the short hash
-          release_name: Release v
-          ${MONTH}_${DAY}_${YEAR}-${{ env.short_hash }}  # Release name
+          release_name: ${MONTH}_${DAY}_${YEAR}-${{ env.short_hash }}  # Release name
           body: |
             This release includes the following features:
             - Feature 1
