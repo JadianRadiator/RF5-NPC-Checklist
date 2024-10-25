@@ -42,7 +42,7 @@ jobs:
         run: |
           # Create a ZIP file with the desired naming format
           ZIP_NAME="npc_checklist-${{ env.short_hash }}.zip"
-          zip -r "$ZIP_NAME" . -x ".github/*" ".gitignore"
+          zip -r "$ZIP_NAME" . -x ".github/*" ".gitignore" ".git"
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV  # Store ZIP name in environment variable
 
       - name: Upload Artifact
