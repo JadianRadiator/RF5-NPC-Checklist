@@ -13,8 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate Short Hash
+      - name: Check for Skip Release Tag
+        id: check_skip_release
+        run: |
+          SKIP_RELEASE=$(git log -1 --format='%B' | grep -i 'skip-release')
+          if [ -z "$SKIP_RELEASE" ]; then
+            echo "SKIP_RELEASE=false" >> $GITHUB_ENV
+          else
+            echo "SKIP_RELEASE=true" >> $GITHUB_ENV
+          fi
+
+      - name: Generate Short Hash (Conditional)
         id: generate_short_hash
+        if: ${{ env.SKIP_RELEASE == 'false' }}
         run: |
           # Get the current timestamp
           TIMESTAMP=$(date +"%H_%M_%S")
@@ -26,8 +37,9 @@ jobs:
           echo "Short Hash: $SHORT_HASH"
           echo "short_hash=$SHORT_HASH" >> $GITHUB_ENV  # Store short hash in environment variable
 
-      - name: Create Release Version
+      - name: Create Release Version (Conditional)
         id: create_version
+        if: ${{ env.SKIP_RELEASE == 'false' }}
         run: |
           # Get the current date components
           MONTH=$(date +'%b')  # 3-letter month (e.g., Oct)
@@ -38,21 +50,29 @@ jobs:
           VERSION="${MONTH}_${DAY}_${YEAR}-${{ env.short_hash }}"
           echo "VERSION=$VERSION" >> $GITHUB_ENV  # Store version in environment variable
 
-      - name: Create ZIP file
+      - name: Create ZIP file (Conditional)
+        id: create_zip
+        if: ${{ env.SKIP_RELEASE == 'false' }}
         run: |
+          # Get the repository slug
+          REPO_SLUG=$(echo "${GITHUB_REPOSITORY}" | cut -d '/' -f 1)
+
           # Create a ZIP file with the desired naming format
-          ZIP_NAME="npc_checklist-${{ env.short_hash }}.zip"
+          ZIP_NAME="${REPO_SLUG}-${{ env.short_hash }}.zip"
           zip -r "$ZIP_NAME" . -x ".github/*" ".gitignore" ".git"
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV  # Store ZIP name in environment variable
 
-      - name: Upload Artifact
+      - name: Upload Artifact (Conditional)
+        id: upload_artifact
+        if: ${{ env.SKIP_RELEASE == 'false' }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ZIP_NAME }}  # Use the created ZIP name as the artifact name
           path: ${{ env.ZIP_NAME }}  # Path to the created ZIP file
 
-      - name: Create Release
+      - name: Create Release (Conditional)
         id: create_release
+        if: ${{ env.SKIP_RELEASE == 'false' }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.short_hash }}  # Use only the short hash for the tag
@@ -64,4 +84,4 @@ jobs:
 
       - name: Use Short Hash
         run: |
-          echo "The generated short hash is: ${{ env.short_hash }}"
+          echo "The generated short hash is: ${{ env.short_hash }}"`
