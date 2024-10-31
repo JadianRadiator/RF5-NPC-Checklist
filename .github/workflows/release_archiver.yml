@@ -18,10 +18,10 @@ jobs:
         run: |
           SKIP_RELEASE=$(git log -1 --format='%B' | grep -i 'skip-release')
           if [ -z "$SKIP_RELEASE" ]; then
-            SKIP_RELEASE="false"
+            echo "SKIP_RELEASE=false" >> $GITHUB_ENV
+          else
+            echo "SKIP_RELEASE=true" >> $GITHUB_ENV
           fi
-
-          echo "SKIP_RELEASE=$SKIP_RELEASE" >> $GITHUB_ENV
 
       - name: Generate Short Hash (Conditional)
         id: generate_short_hash
