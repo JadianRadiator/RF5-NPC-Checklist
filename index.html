@@ -136,37 +136,34 @@
         <label><img src="Rune Factory 5/Villagers/Villagers_Elsje.png" alt="Villagers_Elsje"><br><input id="Villagers_Elsje.png" type="checkbox"><span>Elsje</span></label>
     </td>
 </tr>
-    <tr>
+<tr>
         <th colspan="4"></th>
         <th colspan="2">Special</th>
-
+    </tr>
 <tr>
     <td>
         <label><img src="Rune Factory 5/Villagers/Villagers_Radea.png" alt="Villagers_Radea"><br><input id="Villagers_Radea.png" type="checkbox"><span>Radea</span></label>
     </td>
     <td></td>
-    <td></td>
-    <td></td>
+    <td>
+        <div class="button-container">
+            <button onclick="checkAll()">Check All</button>
+        </div></td>
+    <td>
+        <div class="button-container">
+            <button onclick="uncheckAll()">Uncheck All</button>
+        </div>
+    </td>
     <td>
         <label><img src="Rune Factory 5/Special/Special_Doug.png" alt="Special_Doug"><br><input id="Special_Doug.png" type="checkbox"><span>Doug</span></label>
     </td>
     <td>
         <label><img src="Rune Factory 5/Special/Special_Margaret.png" alt="Special_Margaret"><br><input id="Special_Margaret.png" type="checkbox"><span>Margaret</span></label>
     </td>
-  
 </tr>
-
-
 <tr height="100px">
-<td>    <div class="button-container">
-        <button onclick="checkAll()">Check All</button>
-</td>
-<td>
-        <button onclick="uncheckAll()">Uncheck All</button>
-    </div>
-    <td colspan="4"></td>
-    </tr>
-
+    <td colspan="6"></td>
+</tr>
     </table>
 
     <script>
@@ -207,7 +204,7 @@
                 localStorage.setItem(checkbox.id, 'false');
                 updateBackgroundColor(checkbox);
             });
-   }
-   </script>
+        }
+    </script>
 </body>
 </html>
