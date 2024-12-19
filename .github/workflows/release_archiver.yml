@@ -1,4 +1,4 @@
-name: Generate Short Hash and Create Release
+name: RF5 NPC Friend List
 
 on:
   push:
