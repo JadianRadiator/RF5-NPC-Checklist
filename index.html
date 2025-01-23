@@ -37,10 +37,114 @@
       border: none;
       margin-top: 20px;
     }
+
+    /* Add scaling for table layout similar to npc_checklist.html */
+    html {
+      transform: scale(0.77);
+      transform-origin: 0% 0%;
+    }
+
+    button {
+      width: 75px;
+      height: 75px;
+    }
   </style>
 </head>
 
 <body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RF5 NPC Friend List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden; /* Hide the scrollbar if it's not needed */
+        }
+
+        th {
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        img {
+            max-width: 75px;
+            max-height: 75px;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        label {
+            display: block;
+        }
+        
+        button {
+            width: 75px;
+            height: 75px;
+        }
+        html {
+            transform: scale(0.77);
+            transform-origin: 0% 0%;
+        }
+
+
+    </style>
+</head>
+
+<body>
+  <div id="toolbar"></div>
+
+<script>
+    async function loadToolbar() {
+        try {
+            // Fetch the shared JSON file
+            const response = await fetch('menu.json');
+            if (!response.ok) {
+                throw new Error(`Failed to load menu.json: ${response.status}`);
+            }
+
+            const menuItems = await response.json();
+            const toolbar = document.getElementById('toolbar');
+
+            // Build the toolbar dynamically
+            toolbar.innerHTML = menuItems
+                .map(item => `<a href="${item.url}" class="toolbar-item">${item.name}</a>`)
+                .join(' | ');
+
+            // Add some basic styling
+            const style = document.createElement('style');
+            style.textContent = `
+                #toolbar {
+                    background-color: #333;
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                }
+                .toolbar-item {
+                    color: white;
+                    text-decoration: none;
+                    margin: 0 10px;
+                }
+                .toolbar-item:hover {
+                    text-decoration: underline;
+                }
+            `;
+            document.head.appendChild(style);
+        } catch (error) {
+            console.error('Error loading toolbar:', error);
+        }
+    }
+
+    // Load the toolbar when the page loads
+    window.addEventListener('DOMContentLoaded', loadToolbar);
+</script>
   <table id="infoTable" border="0">
     <tr>
       <th colspan="6">Bachelorettes</th>
@@ -146,6 +250,61 @@
         <br>
         <span>Darroch</span>
       </td>
+    </tr>
+    <tr>
+      <td data-target="subpages/Palmo.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Palmo.png" alt="Palmo">
+        <br>
+        <span>Palmo</span>
+      </td>
+      <td data-target="subpages/Misasagi.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Misasagi.png" alt="Misasagi">
+        <br>
+        <span>Misasagi</span>
+      </td>
+      <td data-target="subpages/Simone.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Simone.png" alt="Simone">
+        <br>
+        <span>Simone</span>
+      </td>
+      <td data-target="subpages/Yuki.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Yuki.png" alt="Yuki">
+        <br>
+        <span>Yuki</span>
+      </td>
+      <td data-target="subpages/Terry.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Terry.png" alt="Terry">
+        <br>
+        <span>Terry</span>
+      </td>
+      <td data-target="subpages/Elsje.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Elsje.png" alt="Elsje">
+        <br>
+        <span>Elsje</span>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2">Special</th>
+      <th colspan="4"></th>
+    </tr>
+    <tr>
+      <td data-target="subpages/Doug.html">
+        <img src="Rune Factory 5/Special/Special_Doug.png" alt="Doug">
+        <br>
+        <span>Doug</span>
+      </td>
+      <td data-target="subpages/Margaret.html">
+        <img src="Rune Factory 5/Special/Special_Margaret.png" alt="Margaret">
+        <br>
+        <span>Margaret</span>
+      </td>
+      <td data-target=""></td>
+      <td data-target="subpages/Livia.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Livia.png" alt="Livia">
+        <br>
+        <span>Livia</span>
+      </td>
+      <td data-target="" colspan="2"></td>
     </tr>
   </table>
   <iframe id="infoFrame"></iframe>
