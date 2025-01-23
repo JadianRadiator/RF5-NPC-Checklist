@@ -2,209 +2,166 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RF5 NPC Friend List</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            overflow: hidden; /* Hide the scrollbar if it's not needed */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RF5 NPC Friend List</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-        th {
-            padding: 5px;
-            text-align: center;
-            vertical-align: middle;
-        }
+    th {
+      padding: 5px;
+      text-align: center;
+      vertical-align: middle;
+    }
 
-        img {
-            max-width: 75px;
-            max-height: 75px;
-        }
+    img {
+      max-width: 75px;
+      max-height: 75px;
+    }
 
-        input[type="checkbox"] {
-            display: none;
-        }
+    td {
+      text-align: center;
+      cursor: pointer;
+    }
 
-        label {
-            display: block;
-        }
-        
-        button {
-            width: 75px;
-            height: 75px;
-        }
-        html {
-            transform: scale(0.77);
-            transform-origin: 0% 0%;
-        }
+    td.active {
+      background-color: lightblue;
+    }
 
-
-    </style>
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
-    <table id="checklist" border="0">
+  <table id="infoTable" border="0">
     <tr>
-        <th colspan="6">Bachelorettes</th>
+      <th colspan="6">Bachelorettes</th>
     </tr>
-<tr>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Beatrice.png" alt="Bachelorettes_Beatrice"><br><input id="Bachelorettes_Beatrice.png" type="checkbox"><span>Beatrice</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Fuuka.png" alt="Bachelorettes_Fuuka"><br><input id="Bachelorettes_Fuuka.png" type="checkbox"><span>Fuuka</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Lucy.png" alt="Bachelorettes_Lucy"><br><input id="Bachelorettes_Lucy.png" type="checkbox"><span>Lucy</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Ludmila.png" alt="Bachelorettes_Ludmila"><br><input id="Bachelorettes_Ludmila.png" type="checkbox"><span>Ludmila</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Priscilla.png" alt="Bachelorettes_Priscilla"><br><input id="Bachelorettes_Priscilla.png" type="checkbox"><span>Priscilla</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelorettes/Bachelorettes_Scarlett.png" alt="Bachelorettes_Scarlett"><br><input id="Bachelorettes_Scarlett.png" type="checkbox"><span>Scarlett</span></label>
-    </td>
-</tr>
     <tr>
-        <th colspan="6">Bachelors</th>
+      <td data-target="subpages/Beatrice.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Beatrice.png" alt="Beatrice">
+        <br>
+        <span>Beatrice</span>
+      </td>
+      <td data-target="subpages/Fuuka.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Fuuka.png" alt="Fuuka">
+        <br>
+        <span>Fuuka</span>
+      </td>
+      <td data-target="subpages/Lucy.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Lucy.png" alt="Lucy">
+        <br>
+        <span>Lucy</span>
+      </td>
+      <td data-target="subpages/Ludmila.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Ludmila.png" alt="Ludmila">
+        <br>
+        <span>Ludmila</span>
+      </td>
+      <td data-target="subpages/Priscilla.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Priscilla.png" alt="Priscilla">
+        <br>
+        <span>Priscilla</span>
+      </td>
+      <td data-target="subpages/Scarlett.html">
+        <img src="Rune Factory 5/Bachelorettes/Bachelorettes_Scarlett.png" alt="Scarlett">
+        <br>
+        <span>Scarlett</span>
+      </td>
     </tr>
-<tr>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Reinhard.png" alt="Reinhard"><br><input id="Bachelors_Reinhard.png" type="checkbox"><span>Reinhard</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Murakumo.png" alt="Murakumo"><br><input id="Bachelors_Murakumo.png" type="checkbox"><span>Murakumo</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Cecil.png" alt="Cecil"><br><input id="Bachelors_Cecil.png" type="checkbox"><span>Cecil</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Lucas.png" alt="Lucas"><br><input id="Bachelors_Lucas.png" type="checkbox"><span>Lucas</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Martin.png" alt="Martin"><br><input id="Bachelors_Martin.png" type="checkbox"><span>Martin</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Bachelors/Bachelors_Ryker.png" alt="Ryker"><br><input id="Bachelors_Ryker.png" type="checkbox"><span>Ryker</span></label>
-    </td>
-</tr>
     <tr>
-        <th colspan="6">Villagers</th>
+      <th colspan="6">Bachelors</th>
     </tr>
-<tr>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Heinz.png" alt="Villagers_Heinz"><br><input id="Villagers_Heinz.png" type="checkbox"><span>Heinz</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Hina.png" alt="Villagers_Hina"><br><input id="Villagers_Hina.png" type="checkbox"><span>Hina</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Julian.png" alt="Villagers_Julian"><br><input id="Villagers_Julian.png" type="checkbox"><span>Julian</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Randolph.png" alt="Villagers_Randolph"><br><input id="Villagers_Randolph.png" type="checkbox"><span>Randolph</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Radea.png" alt="Villagers_Radea"><br><input id="Villagers_Radea.png" type="checkbox"><span>Radea</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Darroch.png" alt="Villagers_Darroch"><br><input id="Villagers_Darroch.png" type="checkbox"><span>Darroch</span></label>
-    </td>
-   
-</tr>
-<tr>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Palmo.png" alt="Villagers_Palmo"><br><input id="Villagers_Palmo.png" type="checkbox"><span>Palmo</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Misasagi.png" alt="Villagers_Misasagi"><br><input id="Villagers_Misasagi.png" type="checkbox"><span>Misasagi</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Simone.png" alt="Villagers_Simone"><br><input id="Villagers_Simone.png" type="checkbox"><span>Simone</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Yuki.png" alt="Villagers_Yuki"><br><input id="Villagers_Yuki.png" type="checkbox"><span>Yuki</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Terry.png" alt="Villagers_Terry"><br><input id="Villagers_Terry.png" type="checkbox"><span>Terry</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Elsje.png" alt="Villagers_Elsje"><br><input id="Villagers_Elsje.png" type="checkbox"><span>Elsje</span></label>
-    </td>
-</tr>
-<tr>
-        <th colspan="2">Special</th>
-        <th colspan="4"></th>
+    <tr>
+      <td data-target="subpages/Reinhard.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Reinhard.png" alt="Reinhard">
+        <br>
+        <span>Reinhard</span>
+      </td>
+      <td data-target="subpages/Murakumo.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Murakumo.png" alt="Murakumo">
+        <br>
+        <span>Murakumo</span>
+      </td>
+      <td data-target="subpages/Cecil.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Cecil.png" alt="Cecil">
+        <br>
+        <span>Cecil</span>
+      </td>
+      <td data-target="subpages/Lucas.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Lucas.png" alt="Lucas">
+        <br>
+        <span>Lucas</span>
+      </td>
+      <td data-target="subpages/Martin.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Martin.png" alt="Martin">
+        <br>
+        <span>Martin</span>
+      </td>
+      <td data-target="subpages/Ryker.html">
+        <img src="Rune Factory 5/Bachelors/Bachelors_Ryker.png" alt="Ryker">
+        <br>
+        <span>Ryker</span>
+      </td>
     </tr>
-<tr>
-  <td>
-        <label><img src="Rune Factory 5/Special/Special_Doug.png" alt="Special_Doug"><br><input id="Special_Doug.png" type="checkbox"><span>Doug</span></label>
-    </td>
-    <td>
-        <label><img src="Rune Factory 5/Special/Special_Margaret.png" alt="Special_Margaret"><br><input id="Special_Margaret.png" type="checkbox"><span>Margaret</span></label>
-    </td>
-    <td></td>
-    <td>
-        <label><img src="Rune Factory 5/Villagers/Villagers_Livia.png" alt="Villagers_Livia"><br><input id="Villagers_Livia.png" type="checkbox"><span>Livia</span></label>
-    </td>
-    <td>
-        <div class="button-container">
-            <button onclick="checkAll()">Check All</button>
-        </div></td>
-    <td>
-        <div class="button-container">
-            <button onclick="uncheckAll()">Uncheck All</button>
-        </div>
-    </td>
-</tr>
-<tr height="100px">
-    <td colspan="6"></td>
-</tr>
-    </table>
+    <tr>
+      <th colspan="6">Villagers</th>
+    </tr>
+    <tr>
+      <td data-target="subpages/Heinz.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Heinz.png" alt="Heinz">
+        <br>
+        <span>Heinz</span>
+      </td>
+      <td data-target="subpages/Hina.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Hina.png" alt="Hina">
+        <br>
+        <span>Hina</span>
+      </td>
+      <td data-target="subpages/Julian.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Julian.png" alt="Julian">
+        <br>
+        <span>Julian</span>
+      </td>
+      <td data-target="subpages/Randolph.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Randolph.png" alt="Randolph">
+        <br>
+        <span>Randolph</span>
+      </td>
+      <td data-target="subpages/Radea.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Radea.png" alt="Radea">
+        <br>
+        <span>Radea</span>
+      </td>
+      <td data-target="subpages/Darroch.html">
+        <img src="Rune Factory 5/Villagers/Villagers_Darroch.png" alt="Darroch">
+        <br>
+        <span>Darroch</span>
+      </td>
+    </tr>
+  </table>
+  <iframe id="infoFrame"></iframe>
 
-    <script>
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  <script>
+    const rows = document.querySelectorAll('#infoTable td');
+    const frame = document.getElementById('infoFrame');
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                localStorage.setItem(checkbox.id, checkbox.checked);
-                updateBackgroundColor(checkbox);
-            });
-
-            const isChecked = localStorage.getItem(checkbox.id) === 'true';
-
-            checkbox.checked = isChecked;
-
-            updateBackgroundColor(checkbox);
-        });
-
-        function updateBackgroundColor(checkbox) {
-            if (checkbox.checked) {
-                checkbox.parentNode.style.backgroundColor = 'lightgreen';
-            } else {
-                checkbox.parentNode.style.backgroundColor = 'white';
-            }
-        }
-
-        function checkAll() {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = true;
-                localStorage.setItem(checkbox.id, 'true');
-                updateBackgroundColor(checkbox);
-            });
-        }
-
-        function uncheckAll() {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-                localStorage.setItem(checkbox.id, 'false');
-                updateBackgroundColor(checkbox);
-            });
-        }
-    </script>
+    rows.forEach(row => {
+      row.addEventListener('click', () => {
+        rows.forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+        frame.src = row.getAttribute('data-target');
+      });
+    });
+  </script>
 </body>
+
 </html>
